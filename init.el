@@ -106,4 +106,17 @@
 (use-package aggressive-indent
   :config (add-hook 'prog-mode-hook 'aggressive-indent-mode))
 
+(use-package rust-mode
+  :mode "\\.rs\\'")
+
+(use-package flycheck
+  :config (global-flycheck-mode))
+
+(use-package rust-flycheck)
+
 (global-set-key (kbd "C-c j") 'join-lines-and-remove-whitespace)
+
+(defun open-dot-emacs ()
+  "Open this file interactively."
+  (interactive)
+  (find-file "~/.emacs.d/init.el"))
