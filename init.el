@@ -30,7 +30,7 @@
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/") t)
 
-(setq package-user-dir (expand-file-name "elpa"))
+(setq package-user-dir (expand-file-name "~/.emacs.d/elpa"))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
