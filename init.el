@@ -18,6 +18,13 @@
  ;; If there is more than one, they won't work right.
  )
 
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+      backup-by-copying t
+      version-control t
+      delete-old-versions t
+      kept-new-versions 20
+      kept-old-versions 5)
+
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/") t)
 
