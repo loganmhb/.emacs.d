@@ -28,7 +28,7 @@
 (setq-default indent-tabs-mode nil)
 
 (add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
 
 (setq package-user-dir (expand-file-name "~/.emacs.d/elpa"))
 (package-initialize)
@@ -53,16 +53,16 @@
   :config
   (evil-mode 1)
   (lexical-let ((default-color (cons (face-background 'mode-line)
-				     (face-foreground 'mode-line))))
+                                     (face-foreground 'mode-line))))
     (add-hook 'post-command-hook
-	      (lambda ()
-		(let ((color (cond ((minibufferp) default-color)
-				   ((evil-insert-state-p) '("#e80000" . "#ffffff"))
-				   ((evil-emacs-state-p) '("#444488" . "#ffffff"))
-				   ((buffer-modified-p) '("#006fa0" . "#ffffff"))
-				   (t default-color))))
-		  (set-face-background 'mode-line (car color))
-		  (set-face-foreground 'mode-line (cdr color)))))))
+              (lambda ()
+                (let ((color (cond ((minibufferp) default-color)
+                                   ((evil-insert-state-p) '("#e80000" . "#ffffff"))
+                                   ((evil-emacs-state-p) '("#444488" . "#ffffff"))
+                                   ((buffer-modified-p) '("#006fa0" . "#ffffff"))
+                                   (t default-color))))
+                  (set-face-background 'mode-line (car color))
+                  (set-face-foreground 'mode-line (cdr color)))))))
 
 (use-package evil-smartparens
   :config (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode))
@@ -72,8 +72,8 @@
 
 (use-package helm
   :bind (("M-x" . helm-M-x)
-	 ("C-x C-f" . helm-find-files)
-	 ("M-y" . helm-show-kill-ring))
+         ("C-x C-f" . helm-find-files)
+         ("M-y" . helm-show-kill-ring))
   :config (helm-mode 1))
 
 (use-package magit
@@ -99,18 +99,28 @@
   :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package js2-mode
-  :init (setq js2-)
   :mode "\\.js\\'")
 
 (use-package cider)
 
 (use-package clojure-mode
-  :mode "\\.clj\\'|\\.boot\\'")
+  :mode "\\.clj\\'|\\.boot\\'"
+  :config
+  (mapc (lambda (s) (put-clojure-indent s 1))
+        '(describe describe-server it
+                   init-state render render-state will-mount did-mount should-update
+                   will-receive-props will-update did-update display-name will-unmount
+                   describe-with-db describe-with-server swaggered context around
+                   with facts fact match describe-with-mock-etl-state describe-with-es))
+  (mapc (lambda (s) (put-clojure-indent s 2))
+        '(GET* POST* PUT* DELETE* PATCH* context*
+               GET POST PUT DELETE PATCH context)))
+
 
 (use-package clj-refactor
   :config (add-hook 'clojure-mode-hook (lambda ()
-					 (clj-refactor-mode 1)
-					 (cljr-add-keybindings-with-prefix "C-c C-r"))))
+                                         (clj-refactor-mode 1)
+                                         (cljr-add-keybindings-with-prefix "C-c C-r"))))
 
 (use-package aggressive-indent
   :config (add-hook 'prog-mode-hook 'aggressive-indent-mode))
