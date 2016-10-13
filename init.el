@@ -138,8 +138,6 @@
 (use-package which-key
   :config (which-key-mode))
 
-(global-set-key (kbd "C-c j") 'join-lines-and-remove-whitespace)
-
 (defun open-dot-emacs ()
   "Open this file interactively."
   (interactive)
