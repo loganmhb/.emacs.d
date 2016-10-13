@@ -116,6 +116,8 @@
         '(GET* POST* PUT* DELETE* PATCH* context*
                GET POST PUT DELETE PATCH context)))
 
+(use-package yaml-mode
+  :mode "\\.yml\\'")
 
 (use-package clj-refactor
   :config (add-hook 'clojure-mode-hook (lambda ()
@@ -132,6 +134,9 @@
   :config (global-flycheck-mode))
 
 (use-package rust-flycheck)
+
+(use-package which-key
+  :config (which-key-mode))
 
 (global-set-key (kbd "C-c j") 'join-lines-and-remove-whitespace)
 
