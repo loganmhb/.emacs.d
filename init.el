@@ -25,6 +25,8 @@
       kept-new-versions 20
       kept-old-versions 5)
 
+(setq-default indent-tabs-mode nil)
+
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/") t)
 
