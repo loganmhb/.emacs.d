@@ -47,6 +47,8 @@
 (use-package smartparens
   :config
   (add-hook 'prog-mode-hook #'smartparens-mode)
+  (add-hook 'lisp-mode-hook (lambda () (sp-local-pair "'" nil :actions :rem)))
+  (add-hook 'clojure-mode-hook (lambda () (sp-local-pair "'" nil :actions :rem)))
   (sp-use-paredit-bindings))
 
 (use-package evil
@@ -133,7 +135,6 @@
 (use-package flycheck
   :config (global-flycheck-mode))
 
-(use-package rust-flycheck)
 
 (use-package which-key
   :config (which-key-mode))
