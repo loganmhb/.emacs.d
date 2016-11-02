@@ -54,6 +54,11 @@
 (use-package evil
   :config
   (evil-mode 1)
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+  (evil-ex-define-cmd "slurp" 'sp-forward-slurp-sexp)
+  (evil-ex-define-cmd "barf" 'sp-forward-barf-sexp)
+  (evil-ex-define-cmd "splice" 'sp-splice-sexp-killing-backward)
   (lexical-let ((default-color (cons (face-background 'mode-line)
                                      (face-foreground 'mode-line))))
     (add-hook 'post-command-hook
@@ -65,6 +70,9 @@
                                    (t default-color))))
                   (set-face-background 'mode-line (car color))
                   (set-face-foreground 'mode-line (cdr color)))))))
+
+(use-package evil-surround
+  :config (global-evil-surround-mode 1))
 
 (use-package evil-smartparens
   :config (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode))
@@ -101,7 +109,14 @@
   :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package js2-mode
+  :init (setq js2-basic-offset 2)
   :mode "\\.js\\'")
+
+(use-package haskell-mode
+  :mode "\\.hs")
+
+(use-package flycheck-haskell
+  :config (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
 
 (use-package cider)
 
@@ -127,7 +142,7 @@
                                          (cljr-add-keybindings-with-prefix "C-c C-r"))))
 
 (use-package aggressive-indent
-  :config (add-hook 'prog-mode-hook 'aggressive-indent-mode))
+  :config (add-hook 'clojure-mode-hook 'aggressive-indent-mode))
 
 (use-package rust-mode
   :mode "\\.rs\\'")
@@ -135,9 +150,16 @@
 (use-package flycheck
   :config (global-flycheck-mode))
 
-
 (use-package which-key
   :config (which-key-mode))
+
+(use-package evil-org
+  :config (add-hook 'org-mode-hook 'evil-org-mode))
+
+(use-package anzu
+  :config
+  (global-anzu-mode 1)
+  (use-package evil-anzu))
 
 (defun open-dot-emacs ()
   "Open this file interactively."
