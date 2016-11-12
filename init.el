@@ -90,7 +90,10 @@
   :bind (("C-x g" . magit-status)))
 
 (use-package org
-  :mode ("\\.org\\'" . org-mode))
+  :mode ("\\.org\\'" . org-mode)
+  :config
+  (add-hook 'org-mode-hook
+            #'olivetti-mode))
 
 (use-package olivetti
   :mode ("\\.txt\\'" . olivetti-mode))
