@@ -28,6 +28,11 @@
       kept-new-versions 20
       kept-old-versions 5)
 
+(column-number-mode 1)
+
+(setq auto-save-file-name-transforms
+      `((".*" "~/.emacs.d/backup/" t)))
+
 (setq-default indent-tabs-mode nil)
 
 (add-to-list 'package-archives
