@@ -1,8 +1,3 @@
-(require 'package)
-(require 'cl)
-
-(menu-bar-mode -1)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -10,13 +5,21 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("0e219d63550634bc5b0c214aced55eb9528640377daf486e13fb18a32bf39856" default))))
+    ("bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "0e219d63550634bc5b0c214aced55eb9528640377daf486e13fb18a32bf39856" default))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:inherit nil :stipple nil :background "#3F3F3F" :foreground "#DCDCCC" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Source Code Pro")))))
+
+(require 'package)
+(require 'cl)
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(when window-system
+  (set-fringe-style 0))
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
       backup-by-copying t
