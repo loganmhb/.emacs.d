@@ -54,9 +54,8 @@
 
 (use-package smartparens
   :config
+  (require 'smartparens-config)
   (add-hook 'prog-mode-hook #'smartparens-mode)
-  (add-hook 'lisp-mode-hook (lambda () (sp-local-pair "'" nil :actions :rem)))
-  (add-hook 'clojure-mode-hook (lambda () (sp-local-pair "'" nil :actions :rem)))
   (sp-use-paredit-bindings))
 
 (use-package evil
@@ -132,10 +131,11 @@
 (use-package cider)
 
 (use-package clojure-mode
-  :mode "\\.clj\\'|\\.boot\\'"
+  :mode "\\.clj\\'"
   :config
+  (add-hook 'clojure-mode-hook 'eldoc-mode)
   (mapc (lambda (s) (put-clojure-indent s 1))
-        '(describe describe-server it
+        '(describe describe-server it html/at metrics/time
                    init-state render render-state will-mount did-mount should-update
                    will-receive-props will-update did-update display-name will-unmount
                    describe-with-db describe-with-server swaggered context around
@@ -148,6 +148,7 @@
   :mode "\\.yml\\'")
 
 (use-package clj-refactor
+  :init (setq cljr-favor-prefix-notation nil)
   :config (add-hook 'clojure-mode-hook (lambda ()
                                          (clj-refactor-mode 1)
                                          (cljr-add-keybindings-with-prefix "C-c C-r"))))
