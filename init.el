@@ -17,8 +17,9 @@
 (require 'cl)
 
 (menu-bar-mode -1)
-(tool-bar-mode -1)
+
 (when window-system
+  (tool-bar-mode -1)
   (set-fringe-style 0))
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
