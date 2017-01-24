@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -14,7 +15,6 @@
  '(default ((t (:inherit nil :stipple nil :background "#3F3F3F" :foreground "#DCDCCC" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Source Code Pro")))))
 
 (require 'package)
-(require 'cl)
 
 (menu-bar-mode -1)
 
@@ -67,7 +67,7 @@
   (evil-ex-define-cmd "slurp" 'sp-forward-slurp-sexp)
   (evil-ex-define-cmd "barf" 'sp-forward-barf-sexp)
   (evil-ex-define-cmd "splice" 'sp-splice-sexp-killing-backward)
-  (lexical-let ((default-color (cons (face-background 'mode-line)
+  (let ((default-color (cons (face-background 'mode-line)
                                      (face-foreground 'mode-line))))
     (add-hook 'post-command-hook
               (lambda ()
