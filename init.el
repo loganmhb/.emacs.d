@@ -14,7 +14,7 @@
     ("486759384769d44b22bb46072726c2cfb3ccc3d49342e5af1854784d505ffc01" "0e219d63550634bc5b0c214aced55eb9528640377daf486e13fb18a32bf39856" default)))
  '(package-selected-packages
    (quote
-    (deft company-go go-company nasm-mode dockerfile-mode ledger-mode go-mode evil-anzu anzu evil-org which-key rust-mode aggressive-indent clj-refactor yaml-mode cider flycheck-haskell haskell-mode js2-mode rainbow-delimiters olivetti magit helm company evil-smartparens evil-surround evil smartparens zenburn-theme use-package))))
+    (projectile jabber elixir-mode deft company-go go-company nasm-mode dockerfile-mode ledger-mode go-mode evil-anzu anzu evil-org which-key rust-mode aggressive-indent clj-refactor yaml-mode cider flycheck-haskell haskell-mode js2-mode rainbow-delimiters olivetti magit helm company evil-smartparens evil-surround evil smartparens zenburn-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -210,12 +210,7 @@
 
 (use-package elixir-mode
   :mode "\\.exs?\\'"
-
-(use-package deft
   :config
-  (setq deft-extensions '("org"))
-  (evil-set-initial-state 'deft-mode 'insert))
-
   (sp-with-modes '(elixir-mode)
     (sp-local-pair "->" "end"
                    :when '(("RET"))
@@ -226,6 +221,11 @@
                    :when '(("SPC" "RET"))
                    :post-handlers '(:add my-elixir-do-end-close-action)
                                     :actions '(insert))))
+
+(use-package deft
+  :config
+  (setq deft-extensions '("org"))
+  (evil-set-initial-state 'deft-mode 'insert))
 
 (use-package jabber
   :config (setq jabber-account-list
