@@ -1,4 +1,9 @@
-;;; -*- lexical-binding: t -*-
+(require 'package)
+(require 'cl)
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -6,7 +11,10 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "0e219d63550634bc5b0c214aced55eb9528640377daf486e13fb18a32bf39856" default))))
+    ("486759384769d44b22bb46072726c2cfb3ccc3d49342e5af1854784d505ffc01" "0e219d63550634bc5b0c214aced55eb9528640377daf486e13fb18a32bf39856" default)))
+ '(package-selected-packages
+   (quote
+    (deft company-go go-company nasm-mode dockerfile-mode ledger-mode go-mode evil-anzu anzu evil-org which-key rust-mode aggressive-indent clj-refactor yaml-mode cider flycheck-haskell haskell-mode js2-mode rainbow-delimiters olivetti magit helm company evil-smartparens evil-surround evil smartparens zenburn-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -35,6 +43,7 @@
       `((".*" "~/.emacs.d/backup/" t)))
 
 (setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
@@ -67,7 +76,7 @@
   (evil-ex-define-cmd "slurp" 'sp-forward-slurp-sexp)
   (evil-ex-define-cmd "barf" 'sp-forward-barf-sexp)
   (evil-ex-define-cmd "splice" 'sp-splice-sexp-killing-backward)
-  (let ((default-color (cons (face-background 'mode-line)
+  (lexical-let ((default-color (cons (face-background 'mode-line)
                                      (face-foreground 'mode-line))))
     (add-hook 'post-command-hook
               (lambda ()
@@ -104,8 +113,7 @@
             #'olivetti-mode))
 
 (use-package olivetti
-  :config
-  (add-hook 'text-mode-hook (lambda () (olivetti-mode 1))))
+  :mode ("\\.txt\\'" . olivetti-mode))
 
 (use-package python
   :mode ("\\.py\\'" . python-mode)
@@ -130,14 +138,17 @@
 (use-package flycheck-haskell
   :config (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
 
-(use-package cider)
+(use-package cider
+  :config (setq cider-cljs-lein-repl
+                "(do (require 'figwheel-sidecar.repl-api)
+                     (figwheel-sidecar.repl-api/start-figwheel!)
+                     (figwheel-sidecar.repl-api/cljs-repl))"))
 
 (use-package clojure-mode
-  :mode "\\.clj\\'"
+  :mode "\\.clj\\'|\\.boot\\'"
   :config
-  (add-hook 'clojure-mode-hook 'eldoc-mode)
   (mapc (lambda (s) (put-clojure-indent s 1))
-        '(describe describe-server it html/at metrics/time
+        '(describe describe-server it wcar query
                    init-state render render-state will-mount did-mount should-update
                    will-receive-props will-update did-update display-name will-unmount
                    describe-with-db describe-with-server swaggered context around
@@ -178,8 +189,18 @@
 (use-package web-mode
   :mode "\\.html\\'")
 
+(use-package ledger-mode)
+
 (use-package hcl-mode
   :mode "\\.tf\\'")
+
+(use-package company-go)
+(use-package go-mode
+  :config (add-hook 'go-mode-hook
+                    (lambda ()
+                      (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
+                      (local-set-key (kbd "C-c C-f") 'gofmt)
+                      (set (make-local-variable 'company-backends) '(company-go)))))
 
 (defun my-elixir-do-end-close-action (id action context)
     (when (eq action 'insert)
@@ -189,7 +210,12 @@
 
 (use-package elixir-mode
   :mode "\\.exs?\\'"
+
+(use-package deft
   :config
+  (setq deft-extensions '("org"))
+  (evil-set-initial-state 'deft-mode 'insert))
+
   (sp-with-modes '(elixir-mode)
     (sp-local-pair "->" "end"
                    :when '(("RET"))
@@ -215,3 +241,6 @@
   "Open this file interactively."
   (interactive)
   (find-file "~/.emacs.d/init.el"))
+
+(provide 'init)
+;;;init.el ends here
