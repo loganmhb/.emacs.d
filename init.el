@@ -223,9 +223,11 @@
                                     :actions '(insert))))
 
 (use-package deft
-  :config
+  :init
   (setq deft-extensions '("org"))
-  (evil-set-initial-state 'deft-mode 'insert))
+  :config
+  (global-set-key (kbd "C-c d") 'deft)
+  (evil-set-initial-state 'deft 'insert))
 
 (use-package jabber
   :config (setq jabber-account-list
