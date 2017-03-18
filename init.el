@@ -1,9 +1,6 @@
 (require 'package)
 (require 'cl)
 
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -28,6 +25,7 @@
 
 (when window-system
   (tool-bar-mode -1)
+  (scroll-bar-mode -1)
   (set-fringe-style 0))
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
@@ -123,7 +121,8 @@
   :mode "\\.rb\\'"
   :interpreter "ruby")
 
-(use-package whitespace)
+(use-package whitespace
+  :config (add-hook 'before-save-hook 'whitespace-cleanup))
 
 (use-package rainbow-delimiters
   :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
@@ -227,7 +226,7 @@
   (setq deft-extensions '("org"))
   :config
   (global-set-key (kbd "C-c d") 'deft)
-  (evil-set-initial-state 'deft 'insert))
+  (evil-set-initial-state 'deft-mode 'insert))
 
 (use-package jabber
   :config (setq jabber-account-list
