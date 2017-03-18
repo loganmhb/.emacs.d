@@ -224,6 +224,7 @@
 (use-package deft
   :init
   (setq deft-extensions '("org"))
+  (setq deft-auto-save-interval 10.0)
   :config
   (global-set-key (kbd "C-c d") 'deft)
   (evil-set-initial-state 'deft-mode 'insert))
