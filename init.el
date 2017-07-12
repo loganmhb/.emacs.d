@@ -11,7 +11,7 @@
     ("486759384769d44b22bb46072726c2cfb3ccc3d49342e5af1854784d505ffc01" "0e219d63550634bc5b0c214aced55eb9528640377daf486e13fb18a32bf39856" default)))
  '(package-selected-packages
    (quote
-    (projectile jabber elixir-mode deft company-go go-company nasm-mode dockerfile-mode ledger-mode go-mode evil-anzu anzu evil-org which-key rust-mode aggressive-indent clj-refactor yaml-mode cider flycheck-haskell haskell-mode js2-mode rainbow-delimiters olivetti magit helm company evil-smartparens evil-surround evil smartparens zenburn-theme use-package))))
+    (flycheck-rust bison-mode company-anaconda racer groovy-mode ensime protobuf-mode eclim emacs-eclim-mode emacs-eclim projectile jabber elixir-mode deft company-go go-company nasm-mode dockerfile-mode ledger-mode go-mode evil-anzu anzu evil-org which-key rust-mode aggressive-indent clj-refactor yaml-mode cider flycheck-haskell haskell-mode js2-mode rainbow-delimiters olivetti magit helm company evil-smartparens evil-surround evil smartparens zenburn-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -45,6 +45,9 @@
 
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
+
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
 (setq package-user-dir (expand-file-name "~/.emacs.d/elpa"))
 (package-initialize)
@@ -108,10 +111,14 @@
   :mode ("\\.org\\'" . org-mode)
   :config
   (add-hook 'org-mode-hook
-            #'olivetti-mode))
+            #'olivetti-mode)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t)
+     (clojure . t))))
 
 (use-package olivetti
-  :mode ("\\.txt\\'" . olivetti-mode))
+  :mode ("\\.\\(txt|org|md|markdown\\)\\'" . olivetti-mode))
 
 (use-package python
   :mode ("\\.py\\'" . python-mode)
@@ -169,7 +176,8 @@
   :config (add-hook 'clojure-mode-hook 'aggressive-indent-mode))
 
 (use-package rust-mode
-  :mode "\\.rs\\'")
+  :mode "\\.rs\\'|\\.lalrpop\\'"
+  :config (add-hook 'before-save-hook 'rust-format-buffer))
 
 (use-package flycheck
   :config (global-flycheck-mode))
@@ -238,6 +246,12 @@
 
 (use-package projectile
   :config (projectile-mode t))
+
+(use-package groovy-mode)
+
+(use-package racer
+  :init (setq racer-rust-src-dir "/home/logan/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src")
+  :config (add-hook 'rust-mode-hook 'racer-mode))
 
 (defun open-dot-emacs ()
   "Open this file interactively."
