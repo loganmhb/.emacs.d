@@ -196,12 +196,30 @@
 (use-package web-mode
   :mode "\\.html\\'")
 
-(use-package ledger-mode)
+(defun lmb-new-transaction ()
+  "Prompts the user for the information necessary to format a basic Ledger transaction."
+  (interactive)
+  (let ((date (read-from-minibuffer "Date: " (format-time-string "%Y-%m-%d")))
+        (title (read-from-minibuffer "Title: "))
+        (cost (read-from-minibuffer "Cost: "))
+        (category (read-from-minibuffer "Expense category: ")))
+    (insert date " " title)
+    (newline)
+    (insert "    Expenses:" category "  " cost)
+    (newline)
+    (insert "    Assets:Checking")
+    (newline)))
+
+(use-package ledger-mode
+  :config (add-hook 'ledger-mode-hook
+                    (lambda ()
+                      (local-set-key "C-c C-t" 'lmb-new-transaction))))
 
 (use-package hcl-mode
   :mode "\\.tf\\'")
 
 (use-package company-go)
+
 (use-package go-mode
   :config (add-hook 'go-mode-hook
                     (lambda ()
@@ -210,10 +228,10 @@
                       (set (make-local-variable 'company-backends) '(company-go)))))
 
 (defun my-elixir-do-end-close-action (id action context)
-    (when (eq action 'insert)
-      (newline-and-indent)
-      (forward-line -1)
-      (indent-according-to-mode)))
+  (when (eq action 'insert)
+    (newline-and-indent)
+    (forward-line -1)
+    (indent-according-to-mode)))
 
 (use-package elixir-mode
   :mode "\\.exs?\\'"
