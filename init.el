@@ -11,7 +11,7 @@
     ("486759384769d44b22bb46072726c2cfb3ccc3d49342e5af1854784d505ffc01" "0e219d63550634bc5b0c214aced55eb9528640377daf486e13fb18a32bf39856" default)))
  '(package-selected-packages
    (quote
-    (flycheck-rust bison-mode company-anaconda racer groovy-mode ensime protobuf-mode eclim emacs-eclim-mode emacs-eclim projectile jabber elixir-mode deft company-go go-company nasm-mode dockerfile-mode ledger-mode go-mode evil-anzu anzu evil-org which-key rust-mode aggressive-indent clj-refactor yaml-mode cider flycheck-haskell haskell-mode js2-mode rainbow-delimiters olivetti magit helm company evil-smartparens evil-surround evil smartparens zenburn-theme use-package))))
+    (geiser racket racket-mode flycheck-rust bison-mode company-anaconda racer groovy-mode ensime protobuf-mode eclim emacs-eclim-mode emacs-eclim projectile jabber elixir-mode deft company-go go-company nasm-mode dockerfile-mode ledger-mode go-mode evil-anzu anzu evil-org which-key rust-mode aggressive-indent clj-refactor yaml-mode cider flycheck-haskell haskell-mode js2-mode rainbow-delimiters olivetti magit helm company evil-smartparens evil-surround evil smartparens zenburn-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -158,7 +158,7 @@
                    init-state render render-state will-mount did-mount should-update
                    will-receive-props will-update did-update display-name will-unmount
                    describe-with-db describe-with-server swaggered context around
-                   with facts fact match describe-with-mock-etl-state describe-with-es))
+                   with facts fact match describe-with-mock-etl-state describe-with-es prop/for-all))
   (mapc (lambda (s) (put-clojure-indent s 2))
         '(GET* POST* PUT* DELETE* PATCH* context*
                GET POST PUT DELETE PATCH context)))
@@ -185,9 +185,6 @@
 (use-package which-key
   :config (which-key-mode))
 
-(use-package evil-org
-  :config (add-hook 'org-mode-hook 'evil-org-mode))
-
 (use-package anzu
   :config
   (global-anzu-mode 1)
@@ -211,9 +208,8 @@
     (newline)))
 
 (use-package ledger-mode
-  :config (add-hook 'ledger-mode-hook
-                    (lambda ()
-                      (local-set-key "C-c C-t" 'lmb-new-transaction))))
+  :mode "\\.dat\\'"
+  :bind  ("C-c t" . lmb-new-transaction))
 
 (use-package hcl-mode
   :mode "\\.tf\\'")
@@ -271,10 +267,21 @@
   :init (setq racer-rust-src-dir "/home/logan/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src")
   :config (add-hook 'rust-mode-hook 'racer-mode))
 
+(use-package geiser
+  :config (local-set-key (kbd "C-c b") 'geiser-load-current-buffer))
+
 (defun open-dot-emacs ()
   "Open this file interactively."
   (interactive)
   (find-file "~/.emacs.d/init.el"))
+
+(defun insert-lozenge ()
+  "Insert the Pollen command character."
+  (interactive)
+  (insert "◊"))
+
+(global-set-key (kbd "C-c C-z") 'insert-lozenge)
+(commandp 'open-dot-emacs)
 
 (provide 'init)
 ;;;init.el ends here
