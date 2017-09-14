@@ -8,10 +8,11 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("486759384769d44b22bb46072726c2cfb3ccc3d49342e5af1854784d505ffc01" "0e219d63550634bc5b0c214aced55eb9528640377daf486e13fb18a32bf39856" default)))
+    ("67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "486759384769d44b22bb46072726c2cfb3ccc3d49342e5af1854784d505ffc01" "0e219d63550634bc5b0c214aced55eb9528640377daf486e13fb18a32bf39856" default)))
+ '(org-agenda-files (quote ("~/log.org")))
  '(package-selected-packages
    (quote
-    (geiser racket racket-mode flycheck-rust bison-mode company-anaconda racer groovy-mode ensime protobuf-mode eclim emacs-eclim-mode emacs-eclim projectile jabber elixir-mode deft company-go go-company nasm-mode dockerfile-mode ledger-mode go-mode evil-anzu anzu evil-org which-key rust-mode aggressive-indent clj-refactor yaml-mode cider flycheck-haskell haskell-mode js2-mode rainbow-delimiters olivetti magit helm company evil-smartparens evil-surround evil smartparens zenburn-theme use-package))))
+    (hcl-mode web-mode geiser racket racket-mode flycheck-rust bison-mode company-anaconda racer groovy-mode ensime protobuf-mode eclim emacs-eclim-mode emacs-eclim projectile jabber elixir-mode deft company-go go-company nasm-mode dockerfile-mode ledger-mode go-mode evil-anzu anzu evil-org which-key rust-mode aggressive-indent clj-refactor yaml-mode cider flycheck-haskell haskell-mode js2-mode rainbow-delimiters olivetti magit helm company evil-smartparens evil-surround evil smartparens zenburn-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -110,12 +111,16 @@
 (use-package org
   :mode ("\\.org\\'" . org-mode)
   :config
+  (global-set-key (kbd "C-c a") 'org-agenda)
   (add-hook 'org-mode-hook
             #'olivetti-mode)
+
+  (setq org-plantuml-jar-path "/opt/plantuml/plantuml.jar")
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((python . t)
-     (clojure . t))))
+     (clojure . t)
+     (plantuml . t))))
 
 (use-package olivetti
   :mode ("\\.\\(txt|org|md|markdown\\)\\'" . olivetti-mode))
@@ -135,8 +140,8 @@
   :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package js2-mode
-  :init (setq js2-basic-offset 2)
-  :mode "\\.js\\'")
+  :config (setq js-indent-level 2)
+  :mode "\\.jsx?\\'")
 
 (use-package haskell-mode
   :mode "\\.hs")
@@ -177,7 +182,9 @@
 
 (use-package rust-mode
   :mode "\\.rs\\'|\\.lalrpop\\'"
-  :config (add-hook 'before-save-hook 'rust-format-buffer))
+  :config (add-hook 'before-save-hook (lambda ()
+                                        (when (eq major-mode 'rust-mode)
+                                          'rust-save-hook))))
 
 (use-package flycheck
   :config (global-flycheck-mode))
