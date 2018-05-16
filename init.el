@@ -8,17 +8,20 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "486759384769d44b22bb46072726c2cfb3ccc3d49342e5af1854784d505ffc01" "0e219d63550634bc5b0c214aced55eb9528640377daf486e13fb18a32bf39856" default)))
+    ("4bfced46dcfc40c45b076a1758ca106a947b1b6a6ff79a3281f3accacfb3243c" "0e0c37ee89f0213ce31205e9ae8bce1f93c9bcd81b1bcda0233061bb02c357a8" "086970da368bb95e42fd4ddac3149e84ce5f165e90dfc6ce6baceae30cf581ef" "444238426b59b360fb74f46b521933f126778777c68c67841c31e0a68b0cc920" "67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "764384e88999768f00524dd3af6e873c62753649aa20ca530848fb6eb00f885b" "065a4fef514889dfd955ec5bf19a4916bcb223b608b20893c526749708bc5b97" "182d47cd9c220b3c9139ebeba0c3bd649947921af86587d9e57838686a6505ee")))
+ '(js-indent-level 2)
+ '(js2-bounce-indent-p t)
+ '(js2-strict-trailing-comma-warning nil)
  '(org-agenda-files (quote ("~/log.org")))
  '(package-selected-packages
    (quote
-    (hcl-mode web-mode geiser racket racket-mode flycheck-rust bison-mode company-anaconda racer groovy-mode ensime protobuf-mode eclim emacs-eclim-mode emacs-eclim projectile jabber elixir-mode deft company-go go-company nasm-mode dockerfile-mode ledger-mode go-mode evil-anzu anzu evil-org which-key rust-mode aggressive-indent clj-refactor yaml-mode cider flycheck-haskell haskell-mode js2-mode rainbow-delimiters olivetti magit helm company evil-smartparens evil-surround evil smartparens zenburn-theme use-package))))
+    (mu4e restclient eziam-theme tao-theme js2-refactor hcl-mode web-mode geiser racket racket-mode flycheck-rust bison-mode company-anaconda racer groovy-mode ensime protobuf-mode eclim emacs-eclim-mode emacs-eclim projectile jabber elixir-mode deft company-go go-company nasm-mode dockerfile-mode ledger-mode go-mode evil-anzu anzu evil-org which-key rust-mode aggressive-indent clj-refactor yaml-mode cider flycheck-haskell haskell-mode js2-mode rainbow-delimiters olivetti magit helm company evil-smartparens evil-surround evil smartparens zenburn-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#3F3F3F" :foreground "#DCDCCC" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Source Code Pro")))))
+ '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Source Code Pro")))))
 
 (require 'package)
 
@@ -78,6 +81,9 @@
   (evil-ex-define-cmd "slurp" 'sp-forward-slurp-sexp)
   (evil-ex-define-cmd "barf" 'sp-forward-barf-sexp)
   (evil-ex-define-cmd "splice" 'sp-splice-sexp-killing-backward)
+  (evil-set-initial-state 'term-mode 'emacs)
+  (evil-set-initial-state 'ansi-term-mode 'emacs)
+  (evil-set-initial-state 'org-capture-mode 'insert)
   (lexical-let ((default-color (cons (face-background 'mode-line)
                                      (face-foreground 'mode-line))))
     (add-hook 'post-command-hook
@@ -120,7 +126,18 @@
    'org-babel-load-languages
    '((python . t)
      (clojure . t)
-     (plantuml . t))))
+     (plantuml . t)))
+
+  (setq org-default-notes-file "~/notes.org")
+  (setq org-agenda-files '("~/notes.org"))
+  (global-set-key (kbd "C-c c") #'org-capture)
+  (add-hook 'org-capture-mode-hook (lambda () (evil-local-mode -1)))
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline "~/notes.org" "Tasks")
+           "* TODO %?\n  %i\n  %a")
+          ("j" "Journal" entry (file+olp+datetree "~/journal.org")
+           "* %?\nEntered on %U\n  %i\n  %a")))
+  (setq org-mu4e-link-query-in-headers-mode nil))
 
 (use-package olivetti
   :mode ("\\.\\(txt|org|md|markdown\\)\\'" . olivetti-mode))
@@ -136,12 +153,21 @@
 (use-package whitespace
   :config (add-hook 'before-save-hook 'whitespace-cleanup))
 
-(use-package rainbow-delimiters
-  :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+;; (use-package rainbow-delimiters
+;;   :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package js2-mode
-  :config (setq js-indent-level 2)
-  :mode "\\.jsx?\\'")
+  :mode "\\.jsx?\\'"
+  :config
+  (custom-set-variables
+   '(js2-basic-offset 2)
+   '(js2-bounce-indent-p t)))
+
+(use-package js2-refactor
+  :config
+  (add-hook 'j2-mode-hook #'js2-refactor-mode)
+  (setq js2-skip-preprocessor-directives t)
+  (js2r-add-keybindings-with-prefix "C-c C-r"))
 
 (use-package haskell-mode
   :mode "\\.hs")
@@ -277,6 +303,12 @@
 (use-package geiser
   :config (local-set-key (kbd "C-c b") 'geiser-load-current-buffer))
 
+(use-package restclient)
+
+(use-package flycheck-rust
+  :config (with-eval-after-load 'rust-mode
+            (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)) )
+
 (defun open-dot-emacs ()
   "Open this file interactively."
   (interactive)
@@ -290,5 +322,58 @@
 (global-set-key (kbd "C-c C-z") 'insert-lozenge)
 (commandp 'open-dot-emacs)
 
+(add-to-list 'load-path "/home/logan/dev/tern/emacs/")
+
+(autoload 'tern-mode "tern.el" t)
+
+(autoload 'tern-auto-complete "tern-auto-complete.el" t)
+
+(define-minor-mode morning-words-mode
+  "Mode for counting morning words"
+  :lighter " 750w"
+  (make-variable-buffer-local
+   (defvar starting-count (count-words (point-min) (point-max))
+     "Word count in buffer when mode is activated"))
+  (add-hook 'after-save-hook
+            (lambda ()
+              (let* ((latest-count (count-words (point-min) (point-max)))
+                    (count-diff (- latest-count starting-count)))
+                (if (> count-diff 750)
+                    (message (format "Done! You have written %d words." count-diff)))))))
+
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+(require 'mu4e)
+;; use mu4e for e-mail in emacs
+(setq mail-user-agent 'mu4e-user-agent)
+
+;; default
+ (setq mu4e-maildir "~/.mail/gmail")
+
+(setq mu4e-drafts-folder "/[Gmail]/Drafts")
+(setq mu4e-sent-folder   "/[Gmail]/Sent Mail")
+(setq mu4e-trash-folder  "/[Gmail]/Trash")
+(setq mu4e-refile-folder "/[Gmail]/All Mail")
+
+;; don't save message to Sent Messages, Gmail/IMAP takes care of this
+(setq mu4e-sent-messages-behavior 'delete)
+(setq mu4e-change-filenames-when-moving t)
+
+;; (See the documentation for `mu4e-sent-messages-behavior' if you have
+;; additional non-Gmail addresses and want assign them different
+;; behavior.)
+
+;; setup some handy shortcuts
+;; you can quickly switch to your Inbox -- press ``ji''
+;; then, when you want archive some messages, move them to
+;; the 'All Mail' folder by pressing ``ma''.
+(setq mu4e-get-mail-command "mbsync gmail")
+
+(setq mu4e-maildir-shortcuts
+    '( ("/Inbox"               . ?i)
+       ("/[Gmail]/Sent Mail"   . ?s)
+       ("/[Gmail]/Trash"       . ?t)
+       ("/[Gmail]/All Mail"    . ?a)))
+
+(require 'org-mu4e)
 (provide 'init)
 ;;;init.el ends here
