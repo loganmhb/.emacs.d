@@ -8,14 +8,13 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("4bfced46dcfc40c45b076a1758ca106a947b1b6a6ff79a3281f3accacfb3243c" "0e0c37ee89f0213ce31205e9ae8bce1f93c9bcd81b1bcda0233061bb02c357a8" "086970da368bb95e42fd4ddac3149e84ce5f165e90dfc6ce6baceae30cf581ef" "444238426b59b360fb74f46b521933f126778777c68c67841c31e0a68b0cc920" "67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "764384e88999768f00524dd3af6e873c62753649aa20ca530848fb6eb00f885b" "065a4fef514889dfd955ec5bf19a4916bcb223b608b20893c526749708bc5b97" "182d47cd9c220b3c9139ebeba0c3bd649947921af86587d9e57838686a6505ee")))
+    ("801a567c87755fe65d0484cb2bded31a4c5bb24fd1fe0ed11e6c02254017acb2" "dbade2e946597b9cda3e61978b5fcc14fa3afa2d3c4391d477bdaeff8f5638c5" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "24fc794a16809a86a63ec2e6f8801e99141aca73fc238ea30d35f87c88847329" "e11569fd7e31321a33358ee4b232c2d3cf05caccd90f896e1df6cab228191109" "4bfced46dcfc40c45b076a1758ca106a947b1b6a6ff79a3281f3accacfb3243c" "0e0c37ee89f0213ce31205e9ae8bce1f93c9bcd81b1bcda0233061bb02c357a8" "086970da368bb95e42fd4ddac3149e84ce5f165e90dfc6ce6baceae30cf581ef" "444238426b59b360fb74f46b521933f126778777c68c67841c31e0a68b0cc920" "67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "764384e88999768f00524dd3af6e873c62753649aa20ca530848fb6eb00f885b" "065a4fef514889dfd955ec5bf19a4916bcb223b608b20893c526749708bc5b97" "182d47cd9c220b3c9139ebeba0c3bd649947921af86587d9e57838686a6505ee")))
  '(js-indent-level 2)
  '(js2-bounce-indent-p t)
  '(js2-strict-trailing-comma-warning nil)
- '(org-agenda-files (quote ("~/log.org")))
  '(package-selected-packages
    (quote
-    (mu4e restclient eziam-theme tao-theme js2-refactor hcl-mode web-mode geiser racket racket-mode flycheck-rust bison-mode company-anaconda racer groovy-mode ensime protobuf-mode eclim emacs-eclim-mode emacs-eclim projectile jabber elixir-mode deft company-go go-company nasm-mode dockerfile-mode ledger-mode go-mode evil-anzu anzu evil-org which-key rust-mode aggressive-indent clj-refactor yaml-mode cider flycheck-haskell haskell-mode js2-mode rainbow-delimiters olivetti magit helm company evil-smartparens evil-surround evil smartparens zenburn-theme use-package))))
+    (discover-clj-refactor org-roam slime slime-mode org-pomodoro kotlin-mode elm-mode clj-refactor cider fennel-mode flow-minor-mode fountain-mode solarized-theme color-theme-solarized clojure-mode mu4e restclient eziam-theme tao-theme js2-refactor hcl-mode web-mode geiser racket racket-mode flycheck-rust bison-mode company-anaconda racer groovy-mode ensime protobuf-mode eclim emacs-eclim-mode emacs-eclim projectile jabber elixir-mode deft company-go go-company nasm-mode dockerfile-mode ledger-mode go-mode evil-anzu anzu evil-org which-key rust-mode aggressive-indent yaml-mode flycheck-haskell haskell-mode js2-mode rainbow-delimiters olivetti magit helm company evil-smartparens evil-surround evil smartparens zenburn-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -26,11 +25,9 @@
 (require 'package)
 
 (menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
 
-(when window-system
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  (set-fringe-style 0))
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
       backup-by-copying t
@@ -55,9 +52,9 @@
 
 (setq package-user-dir (expand-file-name "~/.emacs.d/elpa"))
 (package-initialize)
+(package-refresh-contents)
 
 (unless (package-installed-p 'use-package)
-  (package-refresh-contents)
   (package-install 'use-package))
 
 (require 'use-package)
@@ -103,7 +100,8 @@
   :config (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode))
 
 (use-package company
-  :config (add-hook 'after-init-hook 'global-company-mode))
+  :config (add-hook 'after-init-hook 'global-company-mode)
+  :ensure t)
 
 (use-package helm
   :bind (("M-x" . helm-M-x)
@@ -129,7 +127,7 @@
      (plantuml . t)))
 
   (setq org-default-notes-file "~/notes.org")
-  (setq org-agenda-files '("~/notes.org"))
+  (setq org-agenda-files '("~/notes.org" "~/journal.org"))
   (global-set-key (kbd "C-c c") #'org-capture)
   (add-hook 'org-capture-mode-hook (lambda () (evil-local-mode -1)))
   (setq org-capture-templates
@@ -179,7 +177,8 @@
   :config (setq cider-cljs-lein-repl
                 "(do (require 'figwheel-sidecar.repl-api)
                      (figwheel-sidecar.repl-api/start-figwheel!)
-                     (figwheel-sidecar.repl-api/cljs-repl))"))
+                     (figwheel-sidecar.repl-api/cljs-repl))")
+  (setq nrepl-log-messages t))
 
 (use-package clojure-mode
   :mode "\\.clj\\'|\\.boot\\'"
@@ -189,7 +188,8 @@
                    init-state render render-state will-mount did-mount should-update
                    will-receive-props will-update did-update display-name will-unmount
                    describe-with-db describe-with-server swaggered context around
-                   with facts fact match describe-with-mock-etl-state describe-with-es prop/for-all))
+                   with facts fact match describe-with-mock-etl-state describe-with-es prop/for-all
+                   form/form-to))
   (mapc (lambda (s) (put-clojure-indent s 2))
         '(GET* POST* PUT* DELETE* PATCH* context*
                GET POST PUT DELETE PATCH context)))
@@ -374,6 +374,21 @@
        ("/[Gmail]/Trash"       . ?t)
        ("/[Gmail]/All Mail"    . ?a)))
 
+(add-to-list 'load-path "/usr/elisp")
+
+(require 'beancount)
+
+(setq tramp-default-method "ssh")
+
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+(setq inferior-lisp-program "sbcl")
+(use-package slime)
+
+
+
 (require 'org-mu4e)
+
+(use-package org-roam)
+
 (provide 'init)
 ;;;init.el ends here
