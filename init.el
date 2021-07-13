@@ -203,9 +203,6 @@
                                          (clj-refactor-mode 1)
                                          (cljr-add-keybindings-with-prefix "C-c C-r"))))
 
-(use-package aggressive-indent
-  :config (add-hook 'clojure-mode-hook 'aggressive-indent-mode))
-
 (use-package rust-mode
   :mode "\\.rs\\'|\\.lalrpop\\'"
   :config (add-hook 'before-save-hook (lambda ()
@@ -297,8 +294,12 @@
 (use-package groovy-mode)
 
 (use-package racer
-  :init (setq racer-rust-src-dir "/home/logan/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src")
-  :config (add-hook 'rust-mode-hook 'racer-mode))
+  :init (setq racer-rust-src-path "/home/logan/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library")
+  :config
+  (progn
+    (add-hook 'rust-mode-hook #'racer-mode)
+    (add-hook 'racer-mode-hook #'eldoc-mode)
+    (add-hook 'racer-mode-hook #'company-mode)))
 
 (use-package geiser
   :config (local-set-key (kbd "C-c b") 'geiser-load-current-buffer))
@@ -342,6 +343,7 @@
                     (message (format "Done! You have written %d words." count-diff)))))))
 
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+
 (require 'mu4e)
 ;; use mu4e for e-mail in emacs
 (setq mail-user-agent 'mu4e-user-agent)
@@ -389,6 +391,13 @@
 (require 'org-mu4e)
 
 (use-package org-roam)
+
+(use-package typescript-mode)
+
+(add-to-list auto-mode-alist '("\\.ts'" . typescript-mode) t)
+
+(load "~/.emacs.d/fennel-mode")
+(add-to-list auto-mode-alist '("\\.fnl'" . fennel-mode) t)
 
 (provide 'init)
 ;;;init.el ends here
