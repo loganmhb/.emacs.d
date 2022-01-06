@@ -1,33 +1,43 @@
 (require 'package)
 (require 'cl)
 
+(defvar bootstrap-version)
+(setq straight-use-package-by-default t)
+
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("801a567c87755fe65d0484cb2bded31a4c5bb24fd1fe0ed11e6c02254017acb2" "dbade2e946597b9cda3e61978b5fcc14fa3afa2d3c4391d477bdaeff8f5638c5" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "24fc794a16809a86a63ec2e6f8801e99141aca73fc238ea30d35f87c88847329" "e11569fd7e31321a33358ee4b232c2d3cf05caccd90f896e1df6cab228191109" "4bfced46dcfc40c45b076a1758ca106a947b1b6a6ff79a3281f3accacfb3243c" "0e0c37ee89f0213ce31205e9ae8bce1f93c9bcd81b1bcda0233061bb02c357a8" "086970da368bb95e42fd4ddac3149e84ce5f165e90dfc6ce6baceae30cf581ef" "444238426b59b360fb74f46b521933f126778777c68c67841c31e0a68b0cc920" "67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "764384e88999768f00524dd3af6e873c62753649aa20ca530848fb6eb00f885b" "065a4fef514889dfd955ec5bf19a4916bcb223b608b20893c526749708bc5b97" "182d47cd9c220b3c9139ebeba0c3bd649947921af86587d9e57838686a6505ee")))
+   '("4c56af497ddf0e30f65a7232a8ee21b3d62a8c332c6b268c81e9ea99b11da0d3" "f5b6be56c9de9fd8bdd42e0c05fecb002dedb8f48a5f00e769370e4517dde0e8" "5fce29142d617d53dbc0f9a98e3be80fa1256f16e860aec70ef68e699f37c6aa" "e3b2bad7b781a968692759ad12cb6552bc39d7057762eefaf168dbe604ce3a4b" "583148e87f779040b5349db48b6fcad6fe9a873c6ada20487e9a1ec40d845505" "e6df46d5085fde0ad56a46ef69ebb388193080cc9819e2d6024c9c6e27388ba9" "801a567c87755fe65d0484cb2bded31a4c5bb24fd1fe0ed11e6c02254017acb2" "dbade2e946597b9cda3e61978b5fcc14fa3afa2d3c4391d477bdaeff8f5638c5" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "24fc794a16809a86a63ec2e6f8801e99141aca73fc238ea30d35f87c88847329" "e11569fd7e31321a33358ee4b232c2d3cf05caccd90f896e1df6cab228191109" "4bfced46dcfc40c45b076a1758ca106a947b1b6a6ff79a3281f3accacfb3243c" "0e0c37ee89f0213ce31205e9ae8bce1f93c9bcd81b1bcda0233061bb02c357a8" "086970da368bb95e42fd4ddac3149e84ce5f165e90dfc6ce6baceae30cf581ef" "444238426b59b360fb74f46b521933f126778777c68c67841c31e0a68b0cc920" "67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "764384e88999768f00524dd3af6e873c62753649aa20ca530848fb6eb00f885b" "065a4fef514889dfd955ec5bf19a4916bcb223b608b20893c526749708bc5b97" "182d47cd9c220b3c9139ebeba0c3bd649947921af86587d9e57838686a6505ee"))
+ '(evil-undo-system 'undo-fu)
  '(js-indent-level 2)
  '(js2-bounce-indent-p t)
  '(js2-strict-trailing-comma-warning nil)
- '(package-selected-packages
-   (quote
-    (discover-clj-refactor org-roam slime slime-mode org-pomodoro kotlin-mode elm-mode clj-refactor cider fennel-mode flow-minor-mode fountain-mode solarized-theme color-theme-solarized clojure-mode mu4e restclient eziam-theme tao-theme js2-refactor hcl-mode web-mode geiser racket racket-mode flycheck-rust bison-mode company-anaconda racer groovy-mode ensime protobuf-mode eclim emacs-eclim-mode emacs-eclim projectile jabber elixir-mode deft company-go go-company nasm-mode dockerfile-mode ledger-mode go-mode evil-anzu anzu evil-org which-key rust-mode aggressive-indent yaml-mode flycheck-haskell haskell-mode js2-mode rainbow-delimiters olivetti magit helm company evil-smartparens evil-surround evil smartparens zenburn-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Source Code Pro")))))
-
-(require 'package)
+ '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Fira Code"))))
+ '(variable-pitch ((t (:family "ETBembo")))))
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
       backup-by-copying t
@@ -44,25 +54,13 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
-
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-
-(setq package-user-dir (expand-file-name "~/.emacs.d/elpa"))
-(package-initialize)
-(package-refresh-contents)
-
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
+(straight-use-package 'use-package)
 
 (require 'use-package)
-(setq use-package-always-ensure t)
 
+(use-package zenburn-theme)
 
-(use-package zenburn-theme
-  :init (load-theme 'zenburn))
+(load-theme 'zenburn)
 
 (use-package smartparens
   :config
@@ -81,17 +79,7 @@
   (evil-set-initial-state 'term-mode 'emacs)
   (evil-set-initial-state 'ansi-term-mode 'emacs)
   (evil-set-initial-state 'org-capture-mode 'insert)
-  (lexical-let ((default-color (cons (face-background 'mode-line)
-                                     (face-foreground 'mode-line))))
-    (add-hook 'post-command-hook
-              (lambda ()
-                (let ((color (cond ((minibufferp) default-color)
-                                   ((evil-insert-state-p) '("#e80000" . "#ffffff"))
-                                   ((evil-emacs-state-p) '("#444488" . "#ffffff"))
-                                   ((buffer-modified-p) '("#006fa0" . "#ffffff"))
-                                   (t default-color))))
-                  (set-face-background 'mode-line (car color))
-                  (set-face-foreground 'mode-line (cdr color)))))))
+  (setq evil-undo-system 'undo-fu))
 
 (use-package evil-surround
   :config (global-evil-surround-mode 1))
@@ -103,11 +91,12 @@
   :config (add-hook 'after-init-hook 'global-company-mode)
   :ensure t)
 
-(use-package helm
-  :bind (("M-x" . helm-M-x)
-         ("C-x C-f" . helm-find-files)
-         ("M-y" . helm-show-kill-ring))
-  :config (helm-mode 1))
+(use-package counsel
+  :config
+  (counsel-mode 1)
+  (global-set-key (kbd "C-x b") 'counsel-switch-buffer)
+  (define-key counsel-find-file-map (kbd "<left>") 'counsel-up-directory)
+  (define-key counsel-find-file-map (kbd "<right>") 'ivy-alt-done))
 
 (use-package magit
   :bind (("C-x g" . magit-status)))
@@ -118,13 +107,13 @@
   (global-set-key (kbd "C-c a") 'org-agenda)
   (add-hook 'org-mode-hook
             #'olivetti-mode)
+  (add-hook 'org-mode-hook #'org-bullets-mode)
+  (add-hook 'org-mode-hook #'org-set-regexps-and-options)
 
-  (setq org-plantuml-jar-path "/opt/plantuml/plantuml.jar")
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((python . t)
-     (clojure . t)
-     (plantuml . t)))
+     (clojure . t)))
 
   (setq org-default-notes-file "~/notes.org")
   (setq org-agenda-files '("~/notes.org" "~/journal.org"))
@@ -135,10 +124,17 @@
            "* TODO %?\n  %i\n  %a")
           ("j" "Journal" entry (file+olp+datetree "~/journal.org")
            "* %?\nEntered on %U\n  %i\n  %a")))
-  (setq org-mu4e-link-query-in-headers-mode nil))
+  (setq org-mu4e-link-query-in-headers-mode nil)
+  (setq org-hide-emphasis-markers t)
+  )
+
+(use-package org-bullets
+  :init (org-bullets-mode))
 
 (use-package olivetti
-  :mode ("\\.\\(txt|org|md|markdown\\)\\'" . olivetti-mode))
+  :mode ("\\.\\(txt|org|md|markdown\\)\\'" . olivetti-mode)
+  :config
+  (setq olivetti-style 'fancy))
 
 (use-package python
   :mode ("\\.py\\'" . python-mode)
@@ -178,7 +174,8 @@
                 "(do (require 'figwheel-sidecar.repl-api)
                      (figwheel-sidecar.repl-api/start-figwheel!)
                      (figwheel-sidecar.repl-api/cljs-repl))")
-  (setq nrepl-log-messages t))
+  (setq nrepl-log-messages nil)
+  (setq cider-font-lock-dynamically nil))
 
 (use-package clojure-mode
   :mode "\\.clj\\'|\\.boot\\'"
@@ -223,24 +220,6 @@
 (use-package web-mode
   :mode "\\.html\\'")
 
-(defun lmb-new-transaction ()
-  "Prompts the user for the information necessary to format a basic Ledger transaction."
-  (interactive)
-  (let ((date (read-from-minibuffer "Date: " (format-time-string "%Y-%m-%d")))
-        (title (read-from-minibuffer "Title: "))
-        (cost (read-from-minibuffer "Cost: "))
-        (category (read-from-minibuffer "Expense category: ")))
-    (insert date " " title)
-    (newline)
-    (insert "    Expenses:" category "  " cost)
-    (newline)
-    (insert "    Assets:Checking")
-    (newline)))
-
-(use-package ledger-mode
-  :mode "\\.dat\\'"
-  :bind  ("C-c t" . lmb-new-transaction))
-
 (use-package hcl-mode
   :mode "\\.tf\\'")
 
@@ -281,15 +260,13 @@
   (global-set-key (kbd "C-c d") 'deft)
   (evil-set-initial-state 'deft-mode 'insert))
 
-(use-package jabber
-  :config (setq jabber-account-list
-                '(("logan.buckley@gmail.com"
-                   (:network-server . "talk.google.com")
-                   (:connection-type . ssl)
-                   (:password . (getenv "GMAIL_PASS"))))))
-
 (use-package projectile
-  :config (projectile-mode t))
+  :config (projectile-mode t)
+  (setq projectile-use-git-grep t)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+
+(use-package counsel-projectile
+  :init (counsel-projectile-mode))
 
 (use-package groovy-mode)
 
@@ -342,9 +319,10 @@
                 (if (> count-diff 750)
                     (message (format "Done! You have written %d words." count-diff)))))))
 
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+;;(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 
-(require 'mu4e)
+;;(require 'mu4e)
+
 ;; use mu4e for e-mail in emacs
 (setq mail-user-agent 'mu4e-user-agent)
 
@@ -378,26 +356,49 @@
 
 (add-to-list 'load-path "/usr/elisp")
 
-(require 'beancount)
+;;(require 'beancount)
 
 (setq tramp-default-method "ssh")
 
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
+;;(load (expand-file-name "~/quicklisp/slime-helper.el"))
 (setq inferior-lisp-program "sbcl")
 (use-package slime)
 
 
+;;(require 'org-mu4e)
 
-(require 'org-mu4e)
+;;(load "~/.emacs.d/fennel-mode")
+;;(add-to-list 'auto-mode-alist '("\\.fnl'" . fennel-mode) t)
 
-(use-package org-roam)
+(defun smart-evil-quit ()
+  (interactive)
+  (if (> (count-windows) 1)
+    (evil-quit)
+    (kill-this-buffer)))
 
-(use-package typescript-mode)
+(evil-ex-define-cmd "q"  'smart-evil-quit)
+(evil-ex-define-cmd "quit" 'evil-quit)
 
-(add-to-list auto-mode-alist '("\\.ts'" . typescript-mode) t)
+(set-frame-font "Inconsolata 16" nil t)
 
-(load "~/.emacs.d/fennel-mode")
-(add-to-list auto-mode-alist '("\\.fnl'" . fennel-mode) t)
+(use-package undo-fu)
+
+;; required by doom-modeline
+(use-package all-the-icons)
+
+(use-package doom-modeline
+  :init (doom-modeline-mode 1))
+
+(use-package neotree
+  :config
+  (global-set-key (kbd "C-c t") 'neotree-toggle))
+
+(defun load-dot-emacs ()
+  (interactive)
+  (load-file "/Users/logan/.emacs.d/init.el"))
+
+(setq ns-use-native-fullscreen)
+
 
 (provide 'init)
 ;;;init.el ends here
