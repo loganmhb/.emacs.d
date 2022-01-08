@@ -22,18 +22,18 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("4c56af497ddf0e30f65a7232a8ee21b3d62a8c332c6b268c81e9ea99b11da0d3" "f5b6be56c9de9fd8bdd42e0c05fecb002dedb8f48a5f00e769370e4517dde0e8" "5fce29142d617d53dbc0f9a98e3be80fa1256f16e860aec70ef68e699f37c6aa" "e3b2bad7b781a968692759ad12cb6552bc39d7057762eefaf168dbe604ce3a4b" "583148e87f779040b5349db48b6fcad6fe9a873c6ada20487e9a1ec40d845505" "e6df46d5085fde0ad56a46ef69ebb388193080cc9819e2d6024c9c6e27388ba9" "801a567c87755fe65d0484cb2bded31a4c5bb24fd1fe0ed11e6c02254017acb2" "dbade2e946597b9cda3e61978b5fcc14fa3afa2d3c4391d477bdaeff8f5638c5" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "24fc794a16809a86a63ec2e6f8801e99141aca73fc238ea30d35f87c88847329" "e11569fd7e31321a33358ee4b232c2d3cf05caccd90f896e1df6cab228191109" "4bfced46dcfc40c45b076a1758ca106a947b1b6a6ff79a3281f3accacfb3243c" "0e0c37ee89f0213ce31205e9ae8bce1f93c9bcd81b1bcda0233061bb02c357a8" "086970da368bb95e42fd4ddac3149e84ce5f165e90dfc6ce6baceae30cf581ef" "444238426b59b360fb74f46b521933f126778777c68c67841c31e0a68b0cc920" "67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "764384e88999768f00524dd3af6e873c62753649aa20ca530848fb6eb00f885b" "065a4fef514889dfd955ec5bf19a4916bcb223b608b20893c526749708bc5b97" "182d47cd9c220b3c9139ebeba0c3bd649947921af86587d9e57838686a6505ee"))
+   '("246a9596178bb806c5f41e5b571546bb6e0f4bd41a9da0df5dfbca7ec6e2250c" "835868dcd17131ba8b9619d14c67c127aa18b90a82438c8613586331129dda63" "4c56af497ddf0e30f65a7232a8ee21b3d62a8c332c6b268c81e9ea99b11da0d3" "f5b6be56c9de9fd8bdd42e0c05fecb002dedb8f48a5f00e769370e4517dde0e8" "5fce29142d617d53dbc0f9a98e3be80fa1256f16e860aec70ef68e699f37c6aa" "e3b2bad7b781a968692759ad12cb6552bc39d7057762eefaf168dbe604ce3a4b" "583148e87f779040b5349db48b6fcad6fe9a873c6ada20487e9a1ec40d845505" "e6df46d5085fde0ad56a46ef69ebb388193080cc9819e2d6024c9c6e27388ba9" "801a567c87755fe65d0484cb2bded31a4c5bb24fd1fe0ed11e6c02254017acb2" "dbade2e946597b9cda3e61978b5fcc14fa3afa2d3c4391d477bdaeff8f5638c5" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "24fc794a16809a86a63ec2e6f8801e99141aca73fc238ea30d35f87c88847329" "e11569fd7e31321a33358ee4b232c2d3cf05caccd90f896e1df6cab228191109" "4bfced46dcfc40c45b076a1758ca106a947b1b6a6ff79a3281f3accacfb3243c" "0e0c37ee89f0213ce31205e9ae8bce1f93c9bcd81b1bcda0233061bb02c357a8" "086970da368bb95e42fd4ddac3149e84ce5f165e90dfc6ce6baceae30cf581ef" "444238426b59b360fb74f46b521933f126778777c68c67841c31e0a68b0cc920" "67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "764384e88999768f00524dd3af6e873c62753649aa20ca530848fb6eb00f885b" "065a4fef514889dfd955ec5bf19a4916bcb223b608b20893c526749708bc5b97" "182d47cd9c220b3c9139ebeba0c3bd649947921af86587d9e57838686a6505ee"))
  '(evil-undo-system 'undo-fu)
+ '(fringe-mode 16 nil (fringe))
  '(js-indent-level 2)
  '(js2-bounce-indent-p t)
  '(js2-strict-trailing-comma-warning nil)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Fira Code"))))
- '(variable-pitch ((t (:family "ETBembo")))))
+ '(org-agenda-files '("/Users/logan/gtd/gtd.org" "/Users/logan/gtd/inbox.org"))
+ '(safe-local-variable-values
+   '((clojure-indent-style quote always-align)
+     (eval when
+           (featurep 'rama-mode)
+           (rama-mode)))))
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -58,9 +58,26 @@
 
 (require 'use-package)
 
-(use-package zenburn-theme)
+(defadvice load-theme
+    (before theme-dont-propagate activate)
+  "Make testing out themes easier."
+  (mapc #'disable-theme custom-enabled-themes))
 
-(load-theme 'zenburn)
+(use-package zenburn-theme
+  :config
+  (setq zenburn-use-variable-pitch 1)
+  (setq zenburn-scale-org-headlines nil)
+  )
+
+(load-theme 'zenburn t)
+
+
+
+(use-package doom-themes)
+
+;;(load-theme 'doom-plain t)
+
+;;(load-theme 'doom-zenburn t)
 
 (use-package smartparens
   :config
@@ -91,6 +108,10 @@
   :config (add-hook 'after-init-hook 'global-company-mode)
   :ensure t)
 
+(use-package ivy
+  :config
+  (ivy-mode 1))
+
 (use-package counsel
   :config
   (counsel-mode 1)
@@ -103,38 +124,31 @@
 
 (use-package org
   :mode ("\\.org\\'" . org-mode)
+  :hook ((org-capture-mode . (lambda () (evil-local-mode -1))))
+  :bind (("C-c c" . org-capture)
+         ("C-c a" . org-agenda))
   :config
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (add-hook 'org-mode-hook
-            #'olivetti-mode)
-  (add-hook 'org-mode-hook #'org-bullets-mode)
-  (add-hook 'org-mode-hook #'org-set-regexps-and-options)
-
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((python . t)
      (clojure . t)))
 
-  (setq org-default-notes-file "~/notes.org")
-  (setq org-agenda-files '("~/notes.org" "~/journal.org"))
-  (global-set-key (kbd "C-c c") #'org-capture)
-  (add-hook 'org-capture-mode-hook (lambda () (evil-local-mode -1)))
-  (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/notes.org" "Tasks")
-           "* TODO %?\n  %i\n  %a")
-          ("j" "Journal" entry (file+olp+datetree "~/journal.org")
-           "* %?\nEntered on %U\n  %i\n  %a")))
-  (setq org-mu4e-link-query-in-headers-mode nil)
-  (setq org-hide-emphasis-markers t)
-  )
+  (setq
+   org-default-notes-file "~/notes.org"
+   org-agenda-files '("~/notes.org" "~/journal.org")
+   org-capture-templates
+   '(("t" "Inbox todo" entry (file+headline "~/gtd/inbox.org" "Tasks")
+      "* TODO %?\n  %i\n  %a"))
+   org-refile-targets '(("~/gtd.org" :maxlevel . 2))
+   org-hide-emphasis-markers t
+   org-refile-allow-creating-parent-nodes 'confirm))
 
 (use-package org-bullets
-  :init (org-bullets-mode))
+  :hook (org-mode . org-bullets-mode))
 
 (use-package olivetti
-  :mode ("\\.\\(txt|org|md|markdown\\)\\'" . olivetti-mode)
-  :config
-  (setq olivetti-style 'fancy))
+  :hook (text-mode . olivetti-mode)
+  :config (setq olivetti-style 'fancy))
 
 (use-package python
   :mode ("\\.py\\'" . python-mode)
@@ -170,7 +184,7 @@
   :config (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
 
 (use-package cider
-  :config (setq cider-cljs-lein-repl
+  :config (setq cider-default-cljs-repl
                 "(do (require 'figwheel-sidecar.repl-api)
                      (figwheel-sidecar.repl-api/start-figwheel!)
                      (figwheel-sidecar.repl-api/cljs-repl))")
@@ -298,88 +312,35 @@
   (insert "◊"))
 
 (global-set-key (kbd "C-c C-z") 'insert-lozenge)
+
 (commandp 'open-dot-emacs)
 
 (add-to-list 'load-path "/home/logan/dev/tern/emacs/")
 
-(autoload 'tern-mode "tern.el" t)
-
-(autoload 'tern-auto-complete "tern-auto-complete.el" t)
-
-(define-minor-mode morning-words-mode
-  "Mode for counting morning words"
-  :lighter " 750w"
-  (make-variable-buffer-local
-   (defvar starting-count (count-words (point-min) (point-max))
-     "Word count in buffer when mode is activated"))
-  (add-hook 'after-save-hook
-            (lambda ()
-              (let* ((latest-count (count-words (point-min) (point-max)))
-                    (count-diff (- latest-count starting-count)))
-                (if (> count-diff 750)
-                    (message (format "Done! You have written %d words." count-diff)))))))
-
-;;(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
-
-;;(require 'mu4e)
-
-;; use mu4e for e-mail in emacs
-(setq mail-user-agent 'mu4e-user-agent)
-
-;; default
- (setq mu4e-maildir "~/.mail/gmail")
-
-(setq mu4e-drafts-folder "/[Gmail]/Drafts")
-(setq mu4e-sent-folder   "/[Gmail]/Sent Mail")
-(setq mu4e-trash-folder  "/[Gmail]/Trash")
-(setq mu4e-refile-folder "/[Gmail]/All Mail")
-
-;; don't save message to Sent Messages, Gmail/IMAP takes care of this
-(setq mu4e-sent-messages-behavior 'delete)
-(setq mu4e-change-filenames-when-moving t)
-
-;; (See the documentation for `mu4e-sent-messages-behavior' if you have
-;; additional non-Gmail addresses and want assign them different
-;; behavior.)
-
-;; setup some handy shortcuts
-;; you can quickly switch to your Inbox -- press ``ji''
-;; then, when you want archive some messages, move them to
-;; the 'All Mail' folder by pressing ``ma''.
-(setq mu4e-get-mail-command "mbsync gmail")
-
-(setq mu4e-maildir-shortcuts
-    '( ("/Inbox"               . ?i)
-       ("/[Gmail]/Sent Mail"   . ?s)
-       ("/[Gmail]/Trash"       . ?t)
-       ("/[Gmail]/All Mail"    . ?a)))
-
-(add-to-list 'load-path "/usr/elisp")
-
-;;(require 'beancount)
-
 (setq tramp-default-method "ssh")
 
 ;;(load (expand-file-name "~/quicklisp/slime-helper.el"))
-(setq inferior-lisp-program "sbcl")
-(use-package slime)
-
+;;(setq inferior-lisp-program "sbcl")
+;;(use-package slime)
 
 ;;(require 'org-mu4e)
 
 ;;(load "~/.emacs.d/fennel-mode")
 ;;(add-to-list 'auto-mode-alist '("\\.fnl'" . fennel-mode) t)
 
-(defun smart-evil-quit ()
+(defun lmb/evil-quit ()
+  "Don't kill the frame if we're the last open window."
   (interactive)
   (if (> (count-windows) 1)
     (evil-quit)
     (kill-this-buffer)))
 
-(evil-ex-define-cmd "q"  'smart-evil-quit)
+(evil-ex-define-cmd "q"  'lmb/evil-quit)
+
 (evil-ex-define-cmd "quit" 'evil-quit)
 
-(set-frame-font "Inconsolata 16" nil t)
+(set-frame-font "Fira Code 14" nil t)
+
 
 (use-package undo-fu)
 
@@ -394,11 +355,15 @@
   (global-set-key (kbd "C-c t") 'neotree-toggle))
 
 (defun load-dot-emacs ()
+  "Eval this file."
   (interactive)
   (load-file "/Users/logan/.emacs.d/init.el"))
 
-(setq ns-use-native-fullscreen)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
+(setq ns-use-native-fullscreen t)
+
+(setq header-line-format " ")
 
 (provide 'init)
 ;;;init.el ends here
